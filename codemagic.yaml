@@ -4,8 +4,11 @@ workflows:
       - name: Install Yarn Dependencies
         script: |
           yarn install
+      - name: Install Fastlane
+        script: gem install fastlane -N
+          
       - name: Build Android APK
         working_directory: android
-        script: ./gradlew assembleRelease
+        script: fastlane build
     artifacts:
       - app/build/outputs/**/**/*.apk
