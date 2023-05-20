@@ -1,0 +1,10 @@
+default_platform(:android)
+
+desc "Build Android APK"
+lane :build do
+  gradle(task: "clean", project_dir: ".")
+gradle(
+task: "assemble",
+build_type: "Release"
+)
+end
