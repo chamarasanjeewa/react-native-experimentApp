@@ -1,5 +1,11 @@
 workflows:
-  my-workflow:
+  android:
+    environment:
+     groups:
+        - leave-app-secrets
+    cache:
+      cache_paths:
+        - $CM_BUILD_DIR/node_modules
     scripts:
       - name: Install Yarn Dependencies
         script: |

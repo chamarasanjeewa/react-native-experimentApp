@@ -2,6 +2,12 @@ default_platform(:android)
 
 desc "Build Android APK"
 lane :build do
+  environment = {
+    ENV_VAR_1: ENV['ENV_VAR_1'],
+    ENV_VAR_2: ENV['ENV_VAR_2']
+    # Add other environment variables you need
+  }
+  sh "echo #{environment[:ENV_VAR_1]}"
   gradle(task: "clean", project_dir: ".")
 gradle(
 task: "assemble",
