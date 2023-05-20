@@ -1,6 +1,9 @@
 workflows:
   my-workflow:
     scripts:
+      - name: Install Yarn Dependencies
+        script: |
+          yarn install
       - name: Build Android APK
         working_directory: android
         script: ./gradlew assembleRelease
