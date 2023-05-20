@@ -1,0 +1,39 @@
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# React Native related files
+/node_modules
+/.expo
+/.expo-shared
+npm-debug.log*
+yarn-error.log*
+.env*
+
+# IDE/Editor specific files
+.idea/
+.vscode/
+*.sublime-*
+*.swp
+
+# Dependency directories
+ios/Pods/
+android/.gradle/
+android/app/build/
+android/build/
+android/captures/
+android/local.properties
+android/gradle.properties
+android/gradlew
+android/gradlew.bat
+
+# Generated files
+ios/Pods/
+ios/build/
+ios/*.xcodeproj/
+ios/*.xcworkspace/
+/vendor/bundle/
+
+# Misc
+*.log
+*.gz
