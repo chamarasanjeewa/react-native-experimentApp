@@ -1,19 +1,8 @@
 workflows:
-  build-android:
-    name: Build Android App
-    environment:
-      android:
-        components:
-          - build-tools-31.0.0
-          - android-31
+  my-workflow:
     scripts:
-      - name: Install Dependencies
-        script: npm ci
-      - name: Build APK
-        script: npm run android:release
-      - name: Archive the Artifacts
-        script: |
-          mkdir -p $ARTIFACTS_DIR/app
-          mv android/app/build/outputs/apk/release/app-release.apk $ARTIFACTS_DIR/app/app-release.apk
+      - name: Build Android APK
+        working_directory: android
+        script: ./gradlew assembleRelease
     artifacts:
-      - app/app-release.apk
+      - app/build/outputs/**/**/*.apk
