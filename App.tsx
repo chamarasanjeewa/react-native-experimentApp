@@ -16,6 +16,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import Config from 'react-native-config';
 
 import {
   Colors,
@@ -76,7 +77,9 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Step One">I am going to do code magic</Section>
+          <Section title="Step One">
+            I am going to do code magic {Config.ENV}
+          </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
           </Section>
