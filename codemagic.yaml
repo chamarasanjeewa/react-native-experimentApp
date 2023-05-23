@@ -14,7 +14,10 @@ workflows:
         script: gem install fastlane -N
           
       - name: Build Android APK
-        working_directory: android
-        script: fastlane build
+        script: |
+          cd android
+          fastlane build
+        # working_directory: android
+        # script: fastlane build
     artifacts:
       - app/build/outputs/**/**/*.apk
