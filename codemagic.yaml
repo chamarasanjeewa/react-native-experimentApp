@@ -10,8 +10,8 @@ workflows:
     scripts:
       - name: export env variables to .env file
         script: |
-           echo "Exporting environment variables to .env.dev"
-           env | grep -E "^LEAVE_APP_DEV_" >> .env.dev
+          echo "Exporting environment variables to .env.dev"
+          printenv | grep -E "^MAGIC_VALUES_" > .env.dev
     #   - name: Install Yarn Dependencies
     #     script: |
     #       yarn install
