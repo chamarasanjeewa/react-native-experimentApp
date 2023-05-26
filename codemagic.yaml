@@ -17,21 +17,21 @@ workflows:
         script: |
           echo "Exporting environment variables to .env file"
           > .env.dev  # Create an empty .env.dev file
-          
-          # Loop through the environment variables and append them to .env.dev
-          while IFS='=' read -r key value; do
-            echo "$key=\$$key" >> .env.dev
-          done < <(env | grep -E "^(webBaseUrl|apiBaseUrl|ENV_VAR_1)=")
+
+          # Loop through the environment variables and export them with their values
+          env | grep -E "^ENV_" | while IFS='=' read -r key value; do
+            echo "${key}=${value}" >> .env.dev
+          done
     #   - name: Install Yarn Dependencies
     #     script: |
     #       yarn install
     #   - name: Install Fastlane    ....
     #     script: gem install fastlane -N
 
-      - name: Build Android APK
-        working_directory: android
-        script: | 
-         bundle install
-         bundle exec fastlane build
+      # - name: Build Android APK
+      #   working_directory: android
+      #   script: | 
+      #    bundle install
+      #    bundle exec fastlane build
     # artifacts:
     #   - app/build/outputs/**/**/*.apk
