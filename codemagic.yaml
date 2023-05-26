@@ -12,8 +12,7 @@ workflows:
       - name: export env variables to .env file
         script: |
           echo $ENV_VAR_1
-          env > .env.dev
-          echo $$ENV_VAR_1>.env.dev
+          echo $ENV_VAR_1>.env.dev
     #   - name: Install Yarn Dependencies
     #     script: |
     #       yarn install
