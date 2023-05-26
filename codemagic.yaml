@@ -6,18 +6,20 @@ workflows:
     cache:
       cache_paths:
         - $CM_BUILD_DIR/node_modules
+    
     scripts:
-      - name: Install Yarn Dependencies
+      - name: export env variables to .env file
         script: |
-          yarn install
-      - name: Install Fastlane
-        script: gem install fastlane -N
+                  echo "Exporting environment variables to .env.dev"
+                  env | grep -E "^leave-app-dev-" > .env.dev
+    #   - name: Install Yarn Dependencies
+    #     script: |
+    #       yarn install
+    #   - name: Install Fastlane
+    #     script: gem install fastlane -N
           
-      - name: Build Android APK
-        script: |
-          cd android
-          fastlane build
-        # working_directory: android
-        # script: fastlane build
-    artifacts:
-      - app/build/outputs/**/**/*.apk
+    #   - name: Build Android APK
+    #     working_directory: android
+    #     script: fastlane build
+    # artifacts:
+    #   - app/build/outputs/**/**/*.apk
