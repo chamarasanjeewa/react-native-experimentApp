@@ -2,15 +2,33 @@ default_platform(:android)
 
 desc "Build Android APK"
 lane :build do
-  environment = {
-    ENV_VAR_1: ENV['ENV_VAR_1'],
-    ENV_VAR_2: ENV['ENV_VAR_2']
-    # Add other environment variables you need
-  }
+  # environment = {
+  #   ENV_VAR_1: ENV['ENV_VAR_1'],
+  #   ENV_VAR_2: ENV['ENV_VAR_2']
+  #   # Add other environment variables you need
+  # }
+  ENV.each do |key, value|
+    UI.message("#{key}: #{value}")
+  end
+
   sh "echo #{environment[:ENV_VAR_1]}"
-  gradle(task: "clean", project_dir: ".")
-gradle(
-task: "assemble",
-build_type: "Release"
-)
+  sh "echo #{environment[:test_variable]}"
+#   gradle(task: "clean", project_dir: ".")
+# gradle(
+# task: "assemble",
+# build_type: "Release"
+# )
+
+# firebase_app_distribution(
+#       app: "1:763187060841:android:8ddbff9ed62f90599802f8",
+#       groups: "leave-app-internal-testers",
+#       android_artifact_type:"AAB",
+#       cli:"1//0g-Kxuf_RzIsQCgYIARAAGBASNwF-L9Ir-pOIfTIAnq8JKyFOu1T1selM_h7h90i2E1SlSRnreNhkWOfAxdCjZfasmBV0_gQAQmQ"
+#       android_artifact_path: "./app/build/outputs/bundle/devRelease/app-dev-release.aab",
+#       release_notes: "Version 1.0.0",
+#      // service_credentials_file: "./app-distribution-service-account.json",
+#       debug: false,
+#     )
+
+
 end
