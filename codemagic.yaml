@@ -15,8 +15,13 @@ workflows:
             env > .env.qa
       - name: export env variables to .env file
         script: |
-          echo $ENV_VAR_1
-          echo $ENV_VAR_1>.env.dev
+          echo "Exporting environment variables to .env file"
+          > .env.dev  # Create an empty .env.dev file
+          
+          # Loop through the environment variables and append them to .env.dev
+          while IFS='=' read -r key value; do
+            echo "$key=$value" >> .env.dev
+          done < <(env | grep -E "^(ENV_VAR_1|ENV_VAR_2|ENV_VAR_3)=")
     #   - name: Install Yarn Dependencies
     #     script: |
     #       yarn install
