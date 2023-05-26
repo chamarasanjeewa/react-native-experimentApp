@@ -7,8 +7,12 @@ workflows:
     # cache:
     #   cache_paths:
     #     - $CM_BUILD_DIR/node_modules
-
+   
     scripts:
+      - name: Export Environment Variables
+        script: |
+            echo "Exporting environment variables to .env file"
+            env > .env
       - name: export env variables to .env file
         script: |
           echo $ENV_VAR_1
