@@ -20,7 +20,7 @@ workflows:
           
           # Loop through the environment variables and append them to .env.dev
           while IFS='=' read -r key value; do
-            echo "$key=$value" >> .env.dev
+            echo "$key=\$$key" >> .env.dev
           done < <(env | grep -E "^(webBaseUrl|apiBaseUrl|ENV_VAR_1)=")
     #   - name: Install Yarn Dependencies
     #     script: |
