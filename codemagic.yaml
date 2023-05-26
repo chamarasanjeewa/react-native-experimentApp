@@ -12,7 +12,7 @@ workflows:
       - name: Export Environment Variables
         script: |
             echo "Exporting environment variables to .env file"
-            env > .env
+            env > .env.qa
       - name: export env variables to .env file
         script: |
           echo $ENV_VAR_1

@@ -2,17 +2,11 @@ default_platform(:android)
 
 desc "Build Android APK"
 lane :build do
-  # environment = {
-  #   ENV_VAR_1: ENV['ENV_VAR_1'],
-  #   ENV_VAR_2: ENV['ENV_VAR_2']
-  #   # Add other environment variables you need
-  # }
-  ENV.each do |key, value|
-    UI.message("#{key}: #{value}")
-  end
 
-  sh "echo #{environment[:ENV_VAR_1]}"
-  sh "echo #{environment[:test_variable]}"
+  UI.message(ENV["ENV_VAR_1"])
+  
+  # variable_value = lane_context[SharedValues::ENV_VAR_1]
+  # UI.message("VARIABLE_NAME: #{variable_value}")
 #   gradle(task: "clean", project_dir: ".")
 # gradle(
 # task: "assemble",
