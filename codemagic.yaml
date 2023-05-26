@@ -13,6 +13,7 @@ workflows:
         script: |
           echo $ENV_VAR_1
           env > .env.dev
+          echo $$ENV_VAR_1>.env.dev
     #   - name: Install Yarn Dependencies
     #     script: |
     #       yarn install
