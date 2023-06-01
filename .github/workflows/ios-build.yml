@@ -1,19 +1,80 @@
-name: Checkout Code
-
+name: deploy-ios
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      versionNumber:
+        description: "Version Number (i.e. 2.5.0)"
+        required: false
+      environment:
+        type: environment
+        default: "dev"
+        description: Select Environment
+  release:
+    types: [created]
 
 jobs:
-  checkout-code:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Display Current Code
-        run: ls -la
+            deploy:
+              name: Deploy
+              runs-on: macos-latest
+          
+              steps:
+                - name: Set up AWS credentials and configuration
+                  run: |
+                    mkdir ~/.aws
+                    cat >> ~/.aws/config <<EOF
+                    [default]
+                    aws_access_key_id=$AWS_ACCESS_KEY_ID
+                    aws_secret_access_key=$AWS_SECRET_ACCESS_KEY
+                    region=$AWS_DEFAULT_REGION
+                    output=json
+                    EOF
+                    
+                - name: Checkout
+                  uses: actions/checkout@v2
+                  with:
+                    fetch-depth: 0
+                    repository: baby-journey/mobile-app
+                    token: ${{ secrets.ADMIN_ACCESS_TOKEN }}
+          
+                - name: Create .env file
+                  run: |
+                    touch .env
+                    if ${{ contains(github.event.inputs.environment, 'prod') }}; then
+                      echo TYPESENSE_API_KEY=${{ vars.TYPESENSE_API_KEY_PROD }} >> .env
+                      echo TYPESENSE_BASE_URL=${{ vars.TYPESENSE_BASE_URL_PROD }} >> .env
+                    else
+                      echo TYPESENSE_API_KEY=${{ vars.TYPESENSE_API_KEY }} >> .env
+                      echo TYPESENSE_BASE_URL=${{ vars.TYPESENSE_BASE_URL }} >> .env
+                    fi
+          
+                    - name: Install Yarn Dependencies
+                    run: yarn install
+            
+                - name: InstallFastlane
+                  run: gem install fastlane -N
+            
+                - name: Install Fastlane Plugins
+                  run: |
+                      cd android
+                      fastlane install_plugins
+            
+                - name: Install AWS Amplify
+                  run: npm install -g @aws-amplify/cli
+            
+                - name: Checkout Amplify Environment
+                  run: yarn run amplify:dev
+            
+                - name: Create Environment File
+                  run: |
+                      env_file="./android/.env"
+                      echo "LEAVE_cognitoCustomDomain=${LEAVE_cognitoCustomDomain}" > "$env_file"
+                      echo "API_SECRET=${API_SECRET}" >> "$env_file"
+                      env | grep -E "^LEAVE_" | while IFS='=' read -r key value; do
+                        echo "${key}=${value}" >> "$env_file"
+                      done
+            
+                - name: Build Android APK
+                  run: |
+                      cd android
+                      bundle exec fastlane android build
+            
