@@ -5,12 +5,12 @@ on:
       versionNumber:
         description: "Version Number (i.e. 2.5.0)"
         required: false
-      environment:
-        type: environment
-        default: "dev"
-        description: Select Environment
-  release:
-    types: [created]
+  #     environment:
+  #       type: environment
+  #       default: "dev"
+  #       description: Select Environment
+  # release:
+  #   types: [created]
 
 jobs:
             deploy:
