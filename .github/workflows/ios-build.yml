@@ -1,0 +1,19 @@
+name: Checkout Code
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  checkout-code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Display Current Code
+        run: ls -la
